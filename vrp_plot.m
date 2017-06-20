@@ -5,17 +5,13 @@ function state = vrp_plot(options,state,flag,locations)
 %   to the traveling salesman problem.
 
 %   Copyright 2004-2006 The MathWorks, Inc.
-persistent x y xx yy
-if strcmpi(flag,'init')
-  load('usborder.mat','x','y','xx','yy');
-end
-plot(x,y,'Color','red');
-axis([-0.1 1.5 -0.2 1.2]);
-
-hold on;
 [unused,i] = min(state.Score);
 genotype = state.Population{i};
 
-plot(locations(:,1),locations(:,2),'bo');
+depot = locations(1,:);
+customers = locations(2:end,:);
+plot(depot(1),depot(2),'rs');
+hold on
+plot(customers(:,1),customers(:,2),'bo');
 plot(locations(genotype,1),locations(genotype,2));
 hold off
