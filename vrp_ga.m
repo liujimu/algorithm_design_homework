@@ -26,29 +26,29 @@ for count1 = 1:nnodes
     end;
 end;
 
-%% 针对VRP问题定义
+%% 针对VRP问题自定义遗传算法所需的函数
 % 自定义种群初始化函数
 type create_permutations.m
 % 自定义交叉函数
 type crossover_permutation.m
 % type my_crossover_permutation.m
-% type my_crossover_permutation_2.m
 % 自定义变异函数
 type mutate_permutation.m
 % 自定义适应度函数
 type vrp_fitness.m
 FitnessFcn = @(x) vrp_fitness(x,demands,distances);
 
-%% Genetic Algorithm Options Setup
+% 设置优化选项
 options = optimoptions(@ga, 'PopulationType', 'custom','InitialPopulationRange', ...
                             [1;ncustomers]);
 options = optimoptions(options,'CreationFcn',@create_permutations, ...
-                        'CrossoverFcn',@my_crossover_permutation_2, ...
+                        'CrossoverFcn',@crossover_permutation, ...
                         'MutationFcn',@mutate_permutation, ...
                         'PlotFcn', @gaplotbestf, ...
                         'MaxGenerations',3000,'PopulationSize',300, ...
                         'MaxStallGenerations',200,'UseVectorized',true);
 numberOfVariables = ncustomers;
+% 仿真求解
 [x,fval,reason,output] = ...
     ga(FitnessFcn,numberOfVariables,[],[],[],[],[],[],[],options);
 

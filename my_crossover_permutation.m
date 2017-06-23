@@ -7,8 +7,6 @@ xoverKids = cell(nKids,1); % Normally zeros(nKids,NVARS);
 index = 1;
 
 for i=1:nKids
-    % here is where the special knowledge that the population is a cell
-    % array is used. Normally, this would be thisPopulation(parents(index),:);
     parent = zeros(2,NVARS);
     parent(1,:) = thisPopulation{parents(index)};
     parent(2,:) = thisPopulation{parents(index + 1)};
